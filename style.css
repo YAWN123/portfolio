@@ -18,6 +18,8 @@ body
     color: white;
     padding: 20px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .oldalsav img 
@@ -28,6 +30,16 @@ body
     margin: 0 auto 20px auto;
 }
 
+#footer
+{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
 
 
 
@@ -86,6 +98,22 @@ h2
     margin-bottom: 25px;
 }
 
+.szoveg img
+{
+    width: 1000px;
+    padding-bottom: 25px;
+    display: block;
+    margin: 0 auto;
+}
+
+.szoveg video
+{
+    width: 1000px;
+    padding-bottom: 25px;
+    display: block;
+    margin: 0 auto;
+}
+
 p 
 {
     margin: 5px;
@@ -99,7 +127,3 @@ ul li
 {
     margin-bottom: 5px;
 }
-
-
-
-
