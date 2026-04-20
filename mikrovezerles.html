@@ -41,23 +41,44 @@
 <div class="main">
 
     <div class="szoveg">
-        <h1>Roulette</h1>
-        
+        <h1 style="text-align: center;">Roulette</h1>
     </div>
 
     <div class="szoveg">
-        <h2>Tanulmányok</h2>
-        <p>Iskola neve, évszámok...</p>
+        <h2>A Roulette ismertetése</h2>
+        <p>A rulett egy kaszinójáték, amelyben a játékosok arra fogadnak, hogy egy forgó keréken melyik számra vagy színre esik a golyó. A keréken számozott mezők találhatók (0-tól 36-ig, az európai változatban), amelyek piros vagy fekete színűek, kivéve a nullát, ami zöld.</p>
+        <p>A játék menete során a krupié megforgatja a kereket, majd az ellenkező irányba elgurítja a golyót.</p>
+        <p>Amikor a golyó megáll, az a mező nyer, amelyikbe beleesik.</p>
     </div>
 
     <div class="szoveg">
-        <h2>Tapasztalat / Projektek</h2>
-        <p></p>
+        <h2>Implementáció</h2>
+        <p>A projektben a golyó ki lett helyettesítve LED-ekkel amik a hozzá tartozó számok előtt helyezkednek el.</p>
+        <p>Így a "pörgetés" során nem a golyó gurul körbe, hanem a ledek kör-körös sorban villannak fel a golyót imitálva.</p>
+        <p>A kód olyan módon lett megírva hogy a pögetések kijövetel teljesen véleltlenszerű legyen.</p>
     </div>
 
     <div class="szoveg">
-        <h2>Céljaim</h2>
-        <p></p>
+        <h2>Részei</h2>
+        <ul>
+            <li>1db Arduino NANO</li>
+            <li>37db LED</li>
+            <li>1db Gomb</li>
+            <li>1db Buzzer</li>
+            <li>4db 330ohm-os ellenállás</li>
+        </ul>
+    </div>
+
+    <div class="szoveg">
+        <h2>Működtetése:</h2>
+        <p>Bekapcsolásnál rövid ideig négy LED felvillan és forogni kezdenek a rouletten, ezzel jelezve a bekapcsolását a projektnek.</p>
+        <p>A forgatás elinditásához meg kell nyomni a gombot, aztán a játék elindul.</p>
+        <p>(A forgatás során felkapocsolodó LED-ek mellé a buzzer is ad ki egy hangot, a golyó hangját imitálva)</p>
+    </div>
+
+    <div class="szoveg">
+        <h2>Képek és Videók</h2>
+        <img src="" alt="">
     </div>
 
 </div>
