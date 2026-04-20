@@ -1,0 +1,85 @@
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    overflow: hidden;
+}
+
+
+
+
+.oldalsav {
+    width: 400px;
+    height: 100vh;
+    background: #0a2239;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.oldalsav img {
+    width: 100px;
+    border-radius: 20px;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+
+
+
+
+.menu
+{
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.menu li
+{
+    padding-bottom: 10px;
+}
+
+.menu a
+{
+    display: block;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.3s ;
+}
+
+.menu a:hover 
+{
+    background: #ffffff;
+    color: #0a2239;
+    transform: translateX(5px);
+}
+
+
+
+
+
+.main {
+    width: 70%;
+    padding: 30px;
+    background: #f5f5f5;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+h2 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.szoveg {
+    margin-bottom: 25px;
+}
+
+ul {
+    padding-left: 20px;
+}
