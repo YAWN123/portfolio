@@ -127,3 +127,34 @@ ul li
 {
     margin-bottom: 5px;
 }
+
+
+.mikro img
+{
+    width: 1000px;
+    padding-bottom: 25px;
+    display: block;
+    margin: 0 auto;
+}
+
+.mikro video
+{
+    width: 1000px;
+    padding-bottom: 25px;
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+.pneumatika
+{
+    display: flex;
+    gap: 20px;
+}
+
+.pneumatika img,
+.pneumatika video
+{
+    width: 600px;
+}
