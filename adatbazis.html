@@ -26,8 +26,8 @@
         <li><a href="elektronika.html">Elektronika</a></li>
         <li><a href="halozat.html">Hálózat Kezelés</a></li>
         <li><a href="iot.html">Internet of Things</a></li>
-        <li><a href="adatbazis.html">Adatbázis Kezelés</a></li>
         <li><a href="mikrovezerles.html">Mikrovezérlés</a></li>
+        <li><a href="adatbazis.html">Adatbázis Kezelés</a></li>
         <li><a href="plc.html">PLC Programozás - Iparibusz Rendszerek</a></li>
         <li><a href="pneumatika.html">Pneumatika</a></li>
     </ul>
@@ -38,7 +38,105 @@
 
 </div>
 
+<div class="main">
 
+    <div class="szoveg">
+        <h1 style="text-align: center;">Adatbáziskezelés</h1>
+    </div>
+
+    <div class="szoveg">
+        <h2>Feladat Leírása</h2>
+        <p>Ez az Adatbázis feladat a Mikrovezérlés-es feladathoz lett készítve, MySQL Workbench nevezetű programban.(előző oldal,Roulette)</p>
+    </div>
+
+    <div class="szoveg">
+        <h2>A programban használt műveletek</h2>
+        <ul>
+            <li>CREATE - Valamilyen féle tároló készítése(TABLE, DATABASE)</li>
+            <li>INSERT - Meglévő tárolóba egy változó beszúrása</li>
+            <li>SELECT - TABLE-ből a változó kiválasztása</li>
+            <li>GROUP BY - Változók Összegzése</li>
+            <li>ORDER BY - Eredmények Rendezése</li>
+        </ul>
+    </div>
+
+    <div class="szoveg">
+        <h2>Feladat Fő része</h2>
+    </div>
+    
+    <div class="szoveg" style="background-color: black; color: white; padding: 15px; display: block;">
+        <p>CREATE DATABASE roulette;</p>
+        <p style="padding-bottom: 30px;">USE roulette;</p>
+        <p>CREATE TABLE jatekos (</p>
+        <p style="padding-left: 50px;">jatekos_id INT AUTO_INCREMENT PRIMARY KEY,</p>
+        <p style="padding-left: 50px;">nev VARCHAR(100) NOT NULL,</p>
+        <p style="padding-left: 50px;">szemelyi_szam VARCHAR(20) UNIQUE,</p>
+        <p style="padding-left: 50px;">regisztracio DATE</p>
+        <p style="padding-bottom: 30px;">);</p>
+        <p>CREATE TABLE jatek (</p>
+        <p style="padding-left: 50px;">jatek_id INT AUTO_INCREMENT PRIMARY KEY,</p>
+        <p style="padding-left: 50px;">datum DATETIME,</p>
+        <p style="padding-left: 50px;">nyertes_szam INT,</p>
+        <p style="padding-left: 50px;">szin VARCHAR(10)</p>
+        <p style="padding-bottom: 30px;">);</p>
+        <p>CREATE TABLE tet (</p>
+        <p style="padding-left: 50px;">tet_id INT AUTO_INCREMENT PRIMARY KEY,</p>
+        <p style="padding-left: 50px;">jatekos_id INT,</p>
+        <p style="padding-left: 50px;">jatek_id INT,</p>
+        <p style="padding-left: 50px;">tet_tipus VARCHAR(50),</p>
+        <p style="padding-left: 50px;">osszeg INT,</p>
+        <p style="padding-left: 50px; padding-bottom: 30px;">nyeremeny INT,</p>
+        <p style="padding-left: 50px;">FOREIGN KEY (jatekos_id) REFERENCES jatekos(jatekos_id),</p>
+        <p style="padding-left: 50px;">FOREIGN KEY (jatek_id) REFERENCES jatek(jatek_id)</p>
+        <p>);</p>
+    </div>
+
+    <div class="szoveg">
+        <h2>Adatok Bevitele</h2>
+    </div>
+    
+    <div class="szoveg" style="background-color: black; color: white; padding: 15px; display: block;">
+        <p>INSERT INTO jatekos (nev, szemelyi_szam, regisztracio)</p>
+        <p>VALUES</p>
+        <p>('Kiss Péter','123456AB','2025-01-01'),</p>
+        <p style="padding-bottom: 30px;">('Nagy Anna','987654CD','2025-02-10');</p>
+        <p>INSERT INTO jatek (datum, nyertes_szam, szin)</p>
+        <p>VALUES</p>
+        <p>('2025-03-10 20:00:00',17,'fekete'),</p>
+        <p style="padding-bottom: 30px;">('2025-03-10 20:05:00',3,'piros');</p>
+        <p>INSERT INTO tet (jatekos_id, jatek_id, tet_tipus, osszeg, nyeremeny)</p>
+        <p>VALUES</p>
+        <p>(1,1,'szam',1000,35000),</p>
+        <p>(2,1,'piros',2000,0),</p>
+        <p>(1,2,'fekete',1500,0);</p>
+    </div>
+
+    <div class="szoveg">
+        <h2>Profit Lekérdezése</h2>
+    </div>
+    
+    <div class="szoveg" style="background-color: black; color: white; padding: 15px; display: block;">
+        <p>SELECT</p>
+        <p style="padding-left: 50px;">j.nev,</p>
+        <p style="padding-left: 50px;">SUM(t.nyeremeny - t.osszeg) AS profit</p>
+        <p>FROM tet t</p>
+        <p>JOIN jatekos j ON j.jatekos_id = t.jatekos_id</p>
+        <p>GROUP BY j.nev;</p>
+    </div>
+
+    <div class="szoveg">
+        <h2>Legnagyobb Nyeremény Lekérdezése</h2>
+    </div>
+    
+    <div class="szoveg" style="background-color: black; color: white; padding: 15px; display: block; margin-bottom: 50px;">
+        <p>SELECT *</p>
+        <p>FROM tet</p>
+        <p>ORDER BY nyeremeny DESC</p>
+        <p>LIMIT 1;</p>
+    </div>
+
+
+</div>
 
 
 </body>
