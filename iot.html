@@ -64,6 +64,166 @@
         <img src="KÉPEK/IoT/iot2.jfif" alt="IOT2" style="width: 500px;">
     </div>
 
+    <div>
+        <h2 style="text-align: center;">A Feladat Kódja</h2>
+    </div>
+    
+    <div class="szoveg" class="szoveg" style="background-color: black; color: white; padding: 15px; display: block;">
+        <pre><code>
+            from machine import Pin, PWM, ADC
+            from time import sleep, ticks_ms
+            from umqtt.simple import MQTTClient
+            import network
+            import json
+            import urandom
+            import machine
+
+
+            SSID = ""
+            PASSWORD = ""
+
+
+            piros_led = PWM(Pin(17, Pin.OUT))
+            zold_led = PWM(Pin(18, Pin.OUT))
+            kek_led = PWM(Pin(16, Pin.OUT))
+            piros_led.freq(1000)
+            zold_led.freq(1000)
+            kek_led.freq(1000)
+
+            mikrofon = ADC(26)
+
+
+            ertek_alacsony = 1500
+            ertek_magas = 2500
+
+
+            zaj_szamlalo = 0
+            elozo_zaj = 0
+            elozo_zaj_ido = 0
+            jatek_beki = False
+            jatek_idoeltelt = 0
+            prev_t = ticks_ms()
+
+
+            SERVER = "192.168.56.1"
+            CLIENT_ID = b'BARNI_pico'
+            TOPIC_HANG = b'hang'
+            TOPIC_JATEK = b'jatek'
+
+            wlan = network.WLAN(network.STA_IF)
+            wlan.active(True)
+            wlan.connect(SSID, PASSWORD)
+
+            while not wlan.isconnected():
+                pass
+
+            print("Sikerült csatlakozni a Wifi-hez")
+            print(wlan.ifconfig())
+
+
+            def szin_beallitas(piros, zold, kek):
+                piros_led.duty_u16(int(piros * 257))
+                zold_led.duty_u16(int(zold * 257))
+                kek_led.duty_u16(int(kek * 257))
+
+            def led_zold():
+                szin_beallitas(0, 255, 0)
+
+            def led_sarga():
+                szin_beallitas(255, 255, 0)
+
+            def led_piros():
+                szin_beallitas(255, 0, 0)
+
+            def led_ki():
+                szin_beallitas(0, 0, 0)
+
+
+            def mqtt_connect():
+                client = MQTTClient(CLIENT_ID, SERVER, keepalive=60)
+                client.set_callback(on_message)
+                client.connect()
+                client.subscribe(TOPIC_JATEK)
+                print("Csatlakoztam a %s MQTT szerverhez!"%(SERVER))
+                return client
+
+            def mqtt_reconnect():
+                print("nem sikerult csatlakozni az MQTT szerverhez! újracsatlakozás.....")
+                sleep(5)
+                machine.reset()
+
+            def mqtt_pub_HANG():
+                global elozo_zaj, zaj_szamlalo, elozo_zaj_ido
+
+                jelenlegi_szint = mikrofon.read_u16() >> 4
+
+                if jelenlegi_szint < ertek_alacsony:
+                    szin = "zold"
+                    led_zold()
+                elif jelenlegi_szint < ertek_magas:
+                    szin = "sarga"
+                    led_sarga()
+                else:
+                    szin = "piros"
+                    led_piros()
+
+                if jelenlegi_szint > elozo_zaj + 200:
+                    if (ticks_ms() - elozo_zaj_ido) > 1000:
+                        zaj_szamlalo += 1
+                        elozo_zaj_ido = ticks_ms()
+                        adat = {"hang_szint": jelenlegi_szint, "szín": szin, "szamlalo": zaj_szamlalo}
+                        client.publish(TOPIC_HANG, json.dumps(adat))
+
+
+                elozo_zaj = jelenlegi_szint
+
+            def mqtt_pub_jatek_eredmeny(reakcio_ido):
+                eredmeny = {"Jatek": "befejezve", "reakcio ido": reakcio_ido}
+                client.publish(TOPIC_JATEK, json.dumps(eredmeny))
+
+            def on_message(TOPIC, msg):
+                if TOPIC == TOPIC_JATEK and msg == b'jatek_indul':
+                    reakcio_jatek_indit()
+
+            def reakcio_jatek_indit():
+                global jatek_beki, jatek_idoeltelt
+                led_piros()
+                delay = urandom.randint(10, 50) / 10.0
+                sleep(delay)
+                led_zold()
+                jatek_idoeltelt = ticks_ms()
+                jatek_beki = True
+
+            def jatek_hang_erzekelo():
+                global jatek_beki, jatek_idoeltelt
+                if jatek_beki == False:
+                    return
+                if mikrofon.read_u16() >> 4 > ertek_magas:
+                    mqtt_pub_jatek_eredmeny(ticks_ms() - jatek_idoeltelt)
+                    jatek_beki = False
+                    led_ki()
+                    sleep(1)
+
+            try:
+                client = mqtt_connect()
+                while True:
+                    t = ticks_ms()
+                    if (t - prev_t) > 100:
+                        prev_t = ticks_ms()
+                        client.check_msg()
+
+
+                        if jatek_beki == False:
+                            mqtt_pub_HANG()
+
+                        else:
+                            jatek_hang_erzekelo()
+            except OSError:
+                mqtt_reconnect()
+
+        </code></pre>
+    </div>
+
 </div>
 
 </body>
