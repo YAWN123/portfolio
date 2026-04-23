@@ -47,20 +47,21 @@
     <div class="szoveg">
         <h2>Részei</h2>
         <ul>
-            <li>1 Villanykörte</li>
-            <li>2 Villany Kapcsoló</li>
+            <li>Raspberry Pi Pico 2 W</li>
+            <li>KY-037-es Mikrofon Szenzor</li>
+            <li>RGB led</li>
         </ul>
     </div>
 
     <div class="szoveg">
-        <h2>Működtetése:</h2>
-        <p>Ezt a feladatod egy körülbelül minden házban megtalálható rendszerhez lehetne hasonlítani.</p>
-        <h3>Például:</h3>
-        <p>Az előszobába ahogyan beérsz van egy kapcsoló ami FEL-kapcsolja a villanyt, majd beljebb van egy másik kapcsoló ami LE-kapcsolja a villanyt.</p>
+        <h2>Feladat Leírása</h2>
+        <p>Egy KY-037-es mikrofon modul fogja figyelni a környezeti zajszintet, a mért adatokat MQTT protokollon keresztül továbbítja a Node-RED-nek , ahogyan a hangszint növekedik úgy változik a lednek a színe ZÖLD = Alacsony zajszint, SÁRGA = Közepes zajszint PIROS = Magas zajszint, ennek az érzékenységét Node-RED-en belül lehet állítani. A nap folyamán számolja, hogy hányszor nőtt meg a beérkezett zajszint.</p>
+        <p>A Node-RED-en belül lesz a dashboardon egy gomb, ami elindítja a taps(reakció idő) játékot, ahol a led pirosan fog égni és véletlenszerű késleltetéssel át vált zöldre, majd egy nagyobb hangot kell felvennie a hangszenzornak, ami ez a két történés közötti időt leméri és kimutatja Node-RED-en belül.</p>
     </div>
 
-    <div>
-        <video src="KÉPEK/Elektronika/IMG_5366.mp4" controls style="padding-bottom: 50px;">A videó nem lejátszható!</video>
+    <div style="padding-bottom: 50px; display: flex; justify-content: center; gap: 20px;">
+        <img src="KÉPEK/IoT/iot1.jfif" alt="IOT1" style="width: 500px;">
+        <img src="KÉPEK/IoT/iot2.jfif" alt="IOT2" style="width: 500px;">
     </div>
 
 </div>
